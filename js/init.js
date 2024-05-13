@@ -20,13 +20,60 @@ Papa.parse(url, {
 
 function displayData(data, dataDiv) {
     dataDiv.innerHTML = ''; // Clear the div
-    data.forEach(row => {
-        let rowDiv = document.createElement('div');
-        rowDiv.textContent = JSON.stringify(row);
-        dataDiv.appendChild(rowDiv);
-    });
-}
 
+    // Sort data by timestamp in descending order
+    data.sort((a, b) => {
+        let dateA = new Date(a['Timestamp']);
+        let dateB = new Date(b['Timestamp']);
+        return dateB - dateA;
+    });
+
+    // Create table
+    let table = document.createElement('table');
+
+    // Create table header
+    let thead = document.createElement('thead');
+    let headerRow = document.createElement('tr');
+    // Add 'Block' column to header
+    let blockHeader = document.createElement('th');
+    blockHeader.textContent = 'Block';
+    headerRow.appendChild(blockHeader);
+    Object.keys(data[0]).forEach(key => {
+        let th = document.createElement('th');
+        th.textContent = key;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create table body
+    let tbody = document.createElement('tbody');
+    data.forEach(row => {
+        let tr = document.createElement('tr');
+        // Add 'Block' column to each row
+        let blockData = document.createElement('td');
+        blockData.textContent = '🛑';
+        tr.appendChild(blockData);
+        Object.entries(row).forEach(([key, value]) => {
+            let td = document.createElement('td');
+            // Check if value is a URL
+            if (value.startsWith('http://') || value.startsWith('https://')) {
+                let a = document.createElement('a');
+                a.href = value;
+                a.textContent = value;
+                a.target = '_blank';
+                td.appendChild(a);
+            } else {
+                td.textContent = value;
+            }
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    dataDiv.appendChild(table);
+}
 // Add event listener to the search box
 searchBox.addEventListener('keyup', function() {
     let searchText = searchBox.value.toLowerCase();
