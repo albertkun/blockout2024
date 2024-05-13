@@ -60,7 +60,12 @@ function displayData(data, dataDiv) {
     combinedDataArray.forEach(row => {
         // Add 'Block' column to each row
         let blockData = document.createElement('div');
-        blockData.textContent = '🛑';
+        let stance = row['Stance on Palestine'].toLowerCase();
+        if (stance.includes('pro-palestine')) {
+            blockData.textContent = stance.includes('late') ? '😕' : '🇵🇸';
+        } else {
+            blockData.textContent = '🛑';
+        }
         grid.appendChild(blockData);
         // Add important columns to each row
         ['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
