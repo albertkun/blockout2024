@@ -127,7 +127,7 @@ searchBox.addEventListener('keyup', function() {
 // Get the filter buttons
 let proPalestineButton = document.querySelector("#pro-palestine");
 let notProPalestineButton = document.querySelector("#not-pro-palestine");
-let socialMediaButton = document.querySelector("#social-media");
+// let socialMediaButton = document.querySelector("#social-media");
 
 // Add event listeners to the filter buttons
 proPalestineButton.addEventListener('click', function() {
@@ -140,12 +140,15 @@ notProPalestineButton.addEventListener('click', function() {
     displayData(filteredData, document.getElementById('data'));
 });
 
-socialMediaButton.addEventListener('click', function() {
-    let filteredData = allData.filter(row => row['Social Media Account'].toLowerCase() !== '');
-    displayData(filteredData, document.getElementById('data'));
-});
+// socialMediaButton.addEventListener('click', function() {
+//     let filteredData = allData.filter(row => row['Social Media Account'].toLowerCase() !== '');
+//     displayData(filteredData, document.getElementById('data'));
+// });
 
 // Add event listener to the reset button
 resetButton.addEventListener('click', function() {
+	console.log('Resetting data');
     displayData(allData, document.getElementById('data'));
 });
+
+
