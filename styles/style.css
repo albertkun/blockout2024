@@ -53,3 +53,7 @@ body {
 #data div:last-child {
 	border-bottom: none;
 }
+
+table, th, td {
+    text-align: center;
+}

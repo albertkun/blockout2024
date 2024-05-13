@@ -55,8 +55,8 @@ function displayData(data, dataDiv) {
     // Add important columns to header
     ['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
         let th = document.createElement('th');
-        th.textContent = key;
-        headerRow.appendChild(th);
+		th.textContent = key === 'Stance on Palestine' ? 'Position' : key;
+		headerRow.appendChild(th);
     });
     thead.appendChild(headerRow);
     table.appendChild(thead);
