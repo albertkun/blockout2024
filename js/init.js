@@ -42,76 +42,67 @@ function displayData(data, dataDiv) {
         return dateB - dateA;
     });
 
-    // Create table
-    let table = document.createElement('table');
+    // Create grid container
+    let grid = document.createElement('div');
+    grid.className = 'data-grid';
 
-    // Create table header
-    let thead = document.createElement('thead');
-    let headerRow = document.createElement('tr');
-    // Add 'Block' column to header
-    let blockHeader = document.createElement('th');
+    // Add 'Block' column to grid
+    let blockHeader = document.createElement('div');
     blockHeader.textContent = 'Block';
-    headerRow.appendChild(blockHeader);
-    // Add important columns to header
+    grid.appendChild(blockHeader);
+    // Add important columns to grid
     ['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
-        let th = document.createElement('th');
-		th.textContent = key === 'Stance on Palestine' ? 'Position' : key;
-		headerRow.appendChild(th);
+        let div = document.createElement('div');
+        div.textContent = key === 'Stance on Palestine' ? 'Position' : key;
+        grid.appendChild(div);
     });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
 
-    // Create table body
-    let tbody = document.createElement('tbody');
     combinedDataArray.forEach(row => {
-        let tr = document.createElement('tr');
         // Add 'Block' column to each row
-        let blockData = document.createElement('td');
+        let blockData = document.createElement('div');
         blockData.textContent = '🛑';
-        tr.appendChild(blockData);
+        grid.appendChild(blockData);
         // Add important columns to each row
         ['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
-            let td = document.createElement('td');
+            let div = document.createElement('div');
             let value = row[key];
             // Check if key exists in row
             if (value !== undefined) {
                 // Combine account link with the name of the social media platform
-				if (key === 'Accounts') {
-					value = value.map(account => {
-						let a = document.createElement('a');
-						a.href = account.link;
-						a.target = '_blank';
-						// Create Font Awesome icon
-						let icon = document.createElement('i');
-						let platform = account.platform.toLowerCase();
-						switch (true) {
-							case platform.startsWith('instagram'):
-								icon.className = 'fab fa-instagram';
-								break;
-							case platform.startsWith('tiktok'):
-								icon.className = 'fab fa-tiktok';
-								break;
-							case platform.startsWith('facebook'):
-								icon.className = 'fab fa-facebook';
-								break;
-							case platform.startsWith('twitter'):
-								icon.className = 'fab fa-twitter';
-								break;
-							// Add more cases as needed
-						}
-						a.appendChild(icon);
-						return a.outerHTML;
-					}).join(', ');
+                if (key === 'Accounts') {
+                    value = value.map(account => {
+                        let a = document.createElement('a');
+                        a.href = account.link;
+                        a.target = '_blank';
+                        // Create Font Awesome icon
+                        let icon = document.createElement('i');
+                        let platform = account.platform.toLowerCase();
+                        switch (true) {
+                            case platform.startsWith('instagram'):
+                                icon.className = 'fab fa-instagram';
+                                break;
+                            case platform.startsWith('tiktok'):
+                                icon.className = 'fab fa-tiktok';
+                                break;
+                            case platform.startsWith('facebook'):
+                                icon.className = 'fab fa-facebook';
+                                break;
+                            case platform.startsWith('twitter'):
+                                icon.className = 'fab fa-twitter';
+                                break;
+                            // Add more cases as needed
+                        }
+                        a.appendChild(icon);
+                        return a.outerHTML;
+                    }).join(', ');
                 }
-                td.innerHTML = value;
+                div.innerHTML = value;
             }
-            tr.appendChild(td);
+            grid.appendChild(div);
         });
-        tbody.appendChild(tr);
     });
-    table.appendChild(tbody);
 
-    dataDiv.appendChild(table);
+    dataDiv.appendChild(grid);
 }
 
 // Add event listener to the search box

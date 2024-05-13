@@ -57,3 +57,18 @@ body {
 table, th, td {
     text-align: center;
 }
+
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* adjust the number based on your columns */
+    gap: 1em;
+    justify-items: center;
+}
+
+.data-grid > div {
+    padding: 1em;
+}
+
+.data-grid > div:first-child {
+    font-weight: bold;
+}
