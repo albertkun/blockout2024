@@ -17,12 +17,26 @@ Papa.parse(url, {
         displayData(allData, dataDiv); // Display all data initially
     }
 });
-
 function displayData(data, dataDiv) {
     dataDiv.innerHTML = ''; // Clear the div
 
+    // Combine people with the same names
+    let combinedData = new Map();
+    data.forEach(row => {
+        let name = row['Name'];
+        if (combinedData.has(name)) {
+            let existingRow = combinedData.get(name);
+            existingRow['Accounts'].push({platform: row['Platform'], link: row['Account Link']});
+        } else {
+            combinedData.set(name, {...row, 'Accounts': [{platform: row['Platform'], link: row['Account Link']}]});
+        }
+    });
+
+    // Convert Map to Array
+    let combinedDataArray = Array.from(combinedData.values());
+
     // Sort data by timestamp in descending order
-    data.sort((a, b) => {
+    combinedDataArray.sort((a, b) => {
         let dateA = new Date(a['Timestamp']);
         let dateB = new Date(b['Timestamp']);
         return dateB - dateA;
@@ -38,7 +52,8 @@ function displayData(data, dataDiv) {
     let blockHeader = document.createElement('th');
     blockHeader.textContent = 'Block';
     headerRow.appendChild(blockHeader);
-    Object.keys(data[0]).forEach(key => {
+    // Add important columns to header
+    ['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
         let th = document.createElement('th');
         th.textContent = key;
         headerRow.appendChild(th);
@@ -48,23 +63,47 @@ function displayData(data, dataDiv) {
 
     // Create table body
     let tbody = document.createElement('tbody');
-    data.forEach(row => {
+    combinedDataArray.forEach(row => {
         let tr = document.createElement('tr');
         // Add 'Block' column to each row
         let blockData = document.createElement('td');
         blockData.textContent = '🛑';
         tr.appendChild(blockData);
-        Object.entries(row).forEach(([key, value]) => {
+        // Add important columns to each row
+        ['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
             let td = document.createElement('td');
-            // Check if value is a URL
-            if (value.startsWith('http://') || value.startsWith('https://')) {
-                let a = document.createElement('a');
-                a.href = value;
-                a.textContent = value;
-                a.target = '_blank';
-                td.appendChild(a);
-            } else {
-                td.textContent = value;
+            let value = row[key];
+            // Check if key exists in row
+            if (value !== undefined) {
+                // Combine account link with the name of the social media platform
+				if (key === 'Accounts') {
+					value = value.map(account => {
+						let a = document.createElement('a');
+						a.href = account.link;
+						a.target = '_blank';
+						// Create Font Awesome icon
+						let icon = document.createElement('i');
+						let platform = account.platform.toLowerCase();
+						switch (true) {
+							case platform.startsWith('instagram'):
+								icon.className = 'fab fa-instagram';
+								break;
+							case platform.startsWith('tiktok'):
+								icon.className = 'fab fa-tiktok';
+								break;
+							case platform.startsWith('facebook'):
+								icon.className = 'fab fa-facebook';
+								break;
+							case platform.startsWith('twitter'):
+								icon.className = 'fab fa-twitter';
+								break;
+							// Add more cases as needed
+						}
+						a.appendChild(icon);
+						return a.outerHTML;
+					}).join(', ');
+                }
+                td.innerHTML = value;
             }
             tr.appendChild(td);
         });
@@ -74,6 +113,7 @@ function displayData(data, dataDiv) {
 
     dataDiv.appendChild(table);
 }
+
 // Add event listener to the search box
 searchBox.addEventListener('keyup', function() {
     let searchText = searchBox.value.toLowerCase();
