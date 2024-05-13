@@ -32,11 +32,29 @@ body {
 }
 
 #search {
-	display: block;
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 20px;
-	box-sizing: border-box;
+    display: block;
+    width: 80%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 5px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.search-row {
+    display: grid;
+    justify-items: center;
+}
+
+.button-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
 }
 
 #data {

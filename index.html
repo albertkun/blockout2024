@@ -4,6 +4,8 @@
 <head>
 	<title>Blockout2024 for Palestine</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+	<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6641c6eb905891001910ef11&product=sop' async='async'></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
@@ -12,11 +14,19 @@
 	<div id="menu">
 		<a href="#about">About</a> |
 		<a href="https://forms.gle/BxrvQa85f7a7oBW29" target="_blank">Contribute <i class="fas fa-external-link-alt"></i></a>
+<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+
 	</div>
-	<input type="text" id="search" placeholder="Search...">
-	<div id="not-pro-palestine" class="filter-button">Not Pro-Palestine</div>
-	<div id="pro-palestine" class="filter-button">Pro-Palestine 🇵🇸</div>
-	<div id="reset" class="filter-button">Reset</div>
+	<div class="grid-container">
+		<div class="search-row">
+			<input type="text" id="search" placeholder="Search...">
+		</div>
+		<div class="button-row">
+			<div id="not-pro-palestine" class="filter-button">Not Pro-Palestine</div>
+			<div id="pro-palestine" class="filter-button">Pro-Palestine 🇵🇸</div>
+			<div id="reset" class="filter-button">Reset</div>
+		</div>
+	</div>
 	<div id="data"></div>
 	<div id="contribute">
 	</div>
@@ -33,7 +43,6 @@
 			<p>Blockout 2024 is an online movement sparked by a viral TikTok video criticizing celebrity extravagance at the Met Gala amid the genocide being committed against Palestinians in Gaza by Israeli forces, according to respected international institutions and legal experts. The movement encourages blocking insensitive celebrities and organizations on social media over their perceived indifference to the catastrophic human rights violations in Gaza.</p>
 		</div>
 	</div>
-
 	<script src="js/init.js"></script>
 </body>
 </html>

@@ -133,15 +133,20 @@ let notProPalestineButton = document.querySelector("#not-pro-palestine");
 
 // Add event listeners to the filter buttons
 proPalestineButton.addEventListener('click', function() {
-    let filteredData = allData.filter(row => row['Stance on Palestine'].toLowerCase() === 'pro-palestine');
+    let filteredData = allData.filter(row => {
+        let stance = row['Stance on Palestine'].toLowerCase();
+        return stance === 'pro-palestine' || stance === 'pro-palestine (late)';
+    });
     displayData(filteredData, document.getElementById('data'));
 });
 
 notProPalestineButton.addEventListener('click', function() {
-    let filteredData = allData.filter(row => row['Stance on Palestine'].toLowerCase() !== 'pro-palestine');
+    let filteredData = allData.filter(row => {
+        let stance = row['Stance on Palestine'].toLowerCase();
+        return stance !== 'pro-palestine' && stance !== 'pro-palestine (late)';
+    });
     displayData(filteredData, document.getElementById('data'));
 });
-
 // socialMediaButton.addEventListener('click', function() {
 //     let filteredData = allData.filter(row => row['Social Media Account'].toLowerCase() !== '');
 //     displayData(filteredData, document.getElementById('data'));
