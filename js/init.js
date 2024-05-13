@@ -35,12 +35,14 @@ function displayData(data, dataDiv) {
     // Convert Map to Array
     let combinedDataArray = Array.from(combinedData.values());
 
-    // Sort data by timestamp in descending order
-    combinedDataArray.sort((a, b) => {
-        let dateA = new Date(a['Timestamp']);
-        let dateB = new Date(b['Timestamp']);
-        return dateB - dateA;
-    });
+	// Sort data by name in ascending order
+	combinedDataArray.sort((a, b) => {
+		let nameA = a['Name'].toLowerCase();
+		let nameB = b['Name'].toLowerCase();
+		if (nameA < nameB) return -1;
+		if (nameA > nameB) return 1;
+		return 0;
+	});
 
     // Create grid container
     let grid = document.createElement('div');
@@ -48,14 +50,14 @@ function displayData(data, dataDiv) {
 
     // Add 'Block' column to grid
     let blockHeader = document.createElement('div');
-    blockHeader.textContent = 'Block';
+    blockHeader.textContent = '';
     grid.appendChild(blockHeader);
-    // Add important columns to grid
-    ['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
-        let div = document.createElement('div');
-        div.textContent = key === 'Stance on Palestine' ? 'Position' : key;
-        grid.appendChild(div);
-    });
+		// Add important columns to grid
+		['Name', 'Accounts', 'Stance on Palestine'].forEach(key => {
+			let div = document.createElement('div');
+			div.textContent = key === 'Stance on Palestine' ? 'Position' : key;
+			grid.appendChild(div);
+		});
 
     combinedDataArray.forEach(row => {
         // Add 'Block' column to each row
@@ -99,7 +101,7 @@ function displayData(data, dataDiv) {
                         }
                         a.appendChild(icon);
                         return a.outerHTML;
-                    }).join(', ');
+                    }).join(' ');
                 }
                 div.innerHTML = value;
             }
